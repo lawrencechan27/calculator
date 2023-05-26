@@ -5,6 +5,7 @@ const multiply = (a,b) => a*b;
 const divide = (a,b) => a/b;
 
 // variables for parts of a calculation. MAKE SURE TO SET AS GLOBALS so they can be used in other functions
+// function to wipe vars
 var firstNumber = 0;
 var operator;
 var secondNumber = 0;
@@ -24,6 +25,14 @@ const wipeHolders = function(){
     holder = "0";
     floatHolder = 0;
 }
+// function to wipe vars
+const wipeVars = function(){
+    firstNumber = 0;
+    operator;
+    secondNumber = 0;
+}
+wipeVars()
+
 // function to update the display
 const updateDisplay = function(){
     // convert holder from string to number, also removes leading 0's
@@ -31,6 +40,8 @@ const updateDisplay = function(){
     document.getElementById("display").innerText=floatHolder;
 }
 
+// var to hold total (for chaining)
+var total;
 
 // button press functions
 const btn0 = function(){
@@ -95,49 +106,62 @@ const btnDot = function(){
 const btnClear = function(){
     wipeHolders();
     updateDisplay();
+    total = undefined;
 }
 
 const btnAdd = function(){
     firstNumber = floatHolder;
     operator = add;
-    // wipe holder AFTER setting firstNumber
     wipeHolders();
     updateDisplay();
+    // check if there was already a calculation, if so, current total becomes firstNumber for chaining
+    if(total){
+        firstNumber = total;
+    }
 }
 
 const btnSubtract = function(){
     firstNumber = floatHolder;
     operator = subtract;
-    // wipe holder AFTER setting firstNumber
     wipeHolders();
     updateDisplay();
+     // check if there was already a calculation, if so, current total becomes firstNumber for chaining
+    if(total){
+        firstNumber = total;
+    }
 }
 
 const btnMultiply = function(){
     firstNumber = floatHolder;
     operator = multiply;
-    // wipe holder AFTER setting firstNumber
     wipeHolders();
     updateDisplay();
+    // check if there was already a calculation, if so, current total becomes firstNumber for chaining
+    if(total){
+        firstNumber = total;
+    }
 }
 
 const btnDivide = function(){
     firstNumber = floatHolder;
     operator = divide;
-    // wipe holder AFTER setting firstNumber
     wipeHolders();
     updateDisplay();
+    // check if there was already a calculation, if so, current total becomes firstNumber for chaining
+    if(total){
+        firstNumber = total;
+    }
 }
 
 const btnEquals = function(){
     secondNumber = floatHolder;
-    let total = calculate(firstNumber,secondNumber);
+    total = calculate(firstNumber,secondNumber);
     document.getElementById("display").innerText=total;
     // wipe holder AFTER setting firstNumber
     wipeHolders();
+    wipeVars();
 }
 
 const btnBoobies = function(){
-    holder = "8008135"
-    updateDisplay();
+    document.getElementById("display").innerText="✡︎";
 }
